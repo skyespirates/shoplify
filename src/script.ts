@@ -53,6 +53,7 @@ interface IUI {
   addProduct(product: Product): void;
   resetForm(): void;
   deleteProduct(element: any): void;
+  showAlert(message: string, cssClass: "success" | "danger"): void;
 }
 
 class UI implements IUI {
@@ -84,6 +85,20 @@ class UI implements IUI {
       return;
     }
   }
+
+  showAlert(message: string, cssClass: string): void {
+    const alert = document.createElement("div") as HTMLDivElement;
+    alert.className = `alert alert-${cssClass} text-center`;
+    alert.appendChild(document.createTextNode(message));
+    // insert between container and grid
+    const parent = document.querySelector(".grid")?.parentNode!;
+    const child = document.querySelector(".grid");
+
+    parent.insertBefore(alert, child);
+    setTimeout(() => {
+      document.querySelector(".alert")?.remove();
+    }, 1000);
+  }
 }
 
 const form = document.querySelector("form") as HTMLFormElement;
@@ -96,6 +111,7 @@ form.addEventListener("submit", (e: SubmitEvent) => {
   const product = new Product(name.value, +price.value, +year.value);
   const ui = new UI();
   ui.addProduct(product);
+  ui.showAlert("Product added successfully!", "primary");
   ui.resetForm();
 });
 
@@ -104,4 +120,5 @@ output.addEventListener("click", (e) => {
   e.preventDefault();
   const ui = new UI();
   ui.deleteProduct(e.target);
+  ui.showAlert("Product removed successfully!", "danger");
 });

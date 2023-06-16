@@ -1,3 +1,8 @@
+body {
+  display: grid;
+  row-gap: 24px;
+  background-color: #ddd;
+}
 .logo {
   font-size: 1.5rem;
   text-decoration: none;
@@ -5,9 +10,30 @@
 .section {
   min-height: calc(100vh - 52px);
 }
+.grid {
+  display: grid;
+  grid-template-columns: 4fr 8fr;
+  gap: 1rem;
+}
+.container {
+  position: relative;
+}
+.alert {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
 .form {
-  height: 360px;
+  height: 280.771px;
 }
 .info {
   width: 320px;
+}
+
+@media screen and (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
